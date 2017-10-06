@@ -30,10 +30,16 @@ class XeroServiceProvider extends ServiceProvider
         // Grab config
         $config = $this->app->config->get('xero.config');
 
-        $this->app->bind('XeroPrivate', function () use ($config) {
-            return new \XeroPHP\Application\PrivateApplication($config);
+        // Original
+//         $this->app->bind('XeroPrivate', function () use ($config) {
+//             return new \XeroPHP\Application\PrivateApplication($config);
+//         });
+        // Nhi's changes
+        $this->app->bind('XeroPrivate', function ($class, array $parameters) {
+            return new \XeroPHP\Application\PrivateApplication($parameters[0]);
         });
-
+        
+        
         $this->app->bind('XeroPublic', function () use ($config) {
             return new \XeroPHP\Application\PublicApplication($config);
         });
